@@ -1,5 +1,4 @@
-// const axios = require('axios')
-// const url = 'http://checkip.amazonaws.com/';
+const axios = require('axios');
 let response;
 
 /**
@@ -16,18 +15,23 @@ let response;
  */
 exports.lambdaHandler = async (event, context) => {
     try {
-        // const ret = await axios(url);
+        const { clusterPublicUrl, clusterApiToken, endpoint, fields } = event.data;
+        if (!clusterPublicUrl || !clusterApiToken || !endpoint)
+            throw new Error('Event did not contain cluster URL, API endpoint, or API token.');
+        const url = `${clusterPublicUrl}${endpoint}`;
+        const authHeader = { "authorization": `Bearer ${clusterApiToken}` };
+        const ret = await axios(url, { headers: authHeader })
+            .catch(e => { throw e });
+        let body = {};
+        fields.forEach(f => body[f] = ret.data[f]);
         response = {
             'statusCode': 200,
-            'body': JSON.stringify({
-                message: 'hello world',
-                // location: ret.data.trim()
-            })
+            'body': JSON.stringify(body)
         }
     } catch (err) {
         console.log(err);
         return err;
     }
 
-    return response
+    return response;
 };
