@@ -1,0 +1,14 @@
+{
+    "id": "cf7a74ad-5e3a-4b4a-9348-dabb0d5b7366",
+    "version": "5.0.1-p2-1592",
+    "apiVersion": "1",
+    "name": "churubrik1",
+    "timezone": {
+        "timezone": "America/Chicago"
+    },
+    "geolocation": {
+        "address": "Pearland, TX, USA"
+    },
+    "acceptedEulaVersion": "1.1",
+    "latestEulaVersion": "1.1"
+}
